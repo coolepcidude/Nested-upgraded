@@ -1690,8 +1690,918 @@ new Thing("consolation universe",[".universe"]);
 
 //this is for the nice people who help support the site.
 new Thing("thanks",["can of nightmare","cake","portal"],"Thank you for donating!");
+// ============================================================
+// NESTED — EXPANSION PACK
+// Drop this block into nestedscript.js immediately before the
+// CleanThings() call (the line that reads "CleanThings();").
+// All existing Thing() definitions are left untouched.
+// ============================================================
 
 
+// -----------------------------------------------
+// EXTENDED NAME GENERATORS
+// -----------------------------------------------
+
+// Occupation-based epithets used across several generators
+// (referenced inline below via Choose / WeightedChoose)
+
+// Fantasy name generator — used by oracles, archivists, wanderers, etc.
+// Returns a string like "Sera Ashveil" or "Thorn the Forgotten"
+function FantasyName() {
+    var given = Choose(["Aelys","Arven","Bael","Calix","Dorn","Eira","Fael","Galen","Hira","Isil","Joren","Kael","Lirien","Mira","Nael","Orin","Petra","Quill","Raen","Sael","Thorn","Ulen","Vael","Wren","Xael","Yrel","Zael","Ash","Bryn","Cael","Dael","Ember","Fenn","Gael","Hael","Ivory","Jade","Kira","Lael","Mare","Nira","Obel","Pael","Quen","Rael","Sira","Tael","Uriel","Vael","Wael"]);
+    var sur = Choose(["Ashveil","Blackthorn","Coldwater","Dawnwalker","Emberfall","Frostmark","Greymantle","Hollowbrook","Ironveil","Jademark","Kingsley","Lightbane","Moonwhisper","Nightveil","Oldmark","Pinefall","Quicksilver","Ravenscroft","Silvermark","Thornwall","Underveil","Voidmark","Westerfall","Xaelmark","Yewveil","Zephyrmark","Crestfall","Duskmark","Edgewater","Fernwall"]);
+    var epithet = Choose(["","","","","","","the Forgotten","the Unseen","of Ash","of Ember","Breaker of Crowns","the Hollowed","the Wandering","the Last","the Patient","of No House","the Unnamed","the Broken","Twice-Burned","the Quiet"]);
+    if (epithet !== "") return given + " " + epithet;
+    return given + " " + sur;
+}
+
+// Future / sci-fi occupational name
+function FutureName() {
+    var prefix = Choose(["Arc","Bin","Cel","Dex","Ext","Fyx","Gol","Hex","Iox","Jyn","Kex","Lyx","Mox","Nex","Ori","Pyx","Qel","Rex","Syx","Tyx","Ux","Vex","Wyx","Xel","Yox","Zel"]);
+    var suffix = Choose(["ara","ion","ius","elle","yon","ix","ox","ane","eon","ine","ax","en","un","is","or","ar","us","ia","iel","ael"]);
+    var title = Choose(["","","","","Operator ","Architect ","Compiler ","Executor ","Proxy ","Node ","Unit ","Instance "]);
+    return title + prefix + suffix;
+}
+
+
+// -----------------------------------------------
+// ABSTRACT & COGNITIVE OBJECTS
+// -----------------------------------------------
+
+new Thing("idea",["thought fragment,0-3","belief,30%","fear,10%","desire,20%","memory,10%"],[
+    ["A half-formed ","An unspoken ","A dangerous ","A world-changing ","A small but persistent ","A buried ","An obvious ","A stolen ","A recurring ","A forbidden "],
+    ["idea","notion","concept","hypothesis","theory","intuition","suspicion","compulsion","vision","impulse"]
+]);
+
+new Thing("thought fragment",[],[
+    "It keeps coming back.",
+    "What if none of this is real?",
+    "Someone else had this thought before me.",
+    "I can't tell if I believe this.",
+    "This thought does not belong to me.",
+    "It grows louder when ignored.",
+    "Some thoughts think themselves.",
+    "I have forgotten what came before this.",
+    "This is the thought that started everything.",
+    "There is no word for what this is.",
+    "It arrived fully formed.",
+    "I am afraid of what follows this.",
+    "The thought is older than I am.",
+    "I wrote this down once. I can't find it now.",
+    "If I finish thinking this, something will change.",
+    "I have been here before.",
+    "Not yet. Not quite yet.",
+    "Somewhere, someone is thinking the opposite.",
+    "This thought has weight.",
+    "I wonder if the universe is embarrassed about anything."
+]);
+
+new Thing("belief",["thought fragment,1-2","fear,20%","memory,20%"],[
+    ["A "],
+    ["deep","unshakeable","crumbling","inherited","borrowed","contested","silent","public","secret","irrational","passionate","reluctant","comfortable","dangerous","beautiful"],
+    [" belief","conviction","article of faith","assumption","worldview","doctrine","creed","certainty","position","opinion"]
+]);
+
+new Thing("emotion",["thought fragment,0-2"],[
+    ["A wave of ","A residue of ","A flash of ","A slow ","A sudden ","A complicated ","An old ","A new ","An unfamiliar "],
+    ["grief","joy","rage","longing","guilt","wonder","shame","pride","terror","relief","nostalgia","envy","awe","dread","hope","bitterness","tenderness","frustration","melancholy","euphoria","regret","curiosity","restlessness","numbness","spite","gratitude","embarrassment"]
+]);
+
+new Thing("fear",["thought fragment,0-2","nightmare,10%"],[
+    "Fear of being forgotten.",
+    "Fear of being remembered too well.",
+    "Fear of being the only one.",
+    "Fear that none of it mattered.",
+    "Fear that it all mattered too much.",
+    "Fear of the thing that lives in the dark between thoughts.",
+    "Fear of becoming unrecognizable to yourself.",
+    "Fear of waking up.",
+    "Fear of not waking up.",
+    "Fear that the universe is watching and bored.",
+    "Fear of the last page.",
+    "Fear of blank space.",
+    "Fear that the walls are listening.",
+    "Fear of finishing.",
+    "Fear of the second time.",
+    "Fear that this has happened before.",
+    "Fear of becoming a pattern.",
+    "Fear of those who have no fear.",
+    "Fear of the word that ends everything.",
+    "Fear of being exactly right."
+]);
+
+new Thing("desire",["thought fragment,0-2","emotion,20%"],[
+    "A desire to be elsewhere.",
+    "A desire to be someone else, briefly.",
+    "A desire to start over.",
+    "A desire to be witnessed.",
+    "A desire for a door that opens both ways.",
+    "A desire to build something that lasts.",
+    "A desire to burn something that doesn't.",
+    "A desire to know how it ends.",
+    "A desire to stop knowing things.",
+    "A desire to be ordinary.",
+    "A desire to be extraordinary, quietly.",
+    "A desire for the right word at the right moment.",
+    "A desire to sleep without dreaming.",
+    "A desire to remember everything.",
+    "A desire to forget one specific thing.",
+    "A desire to be understood without explanation.",
+    "A desire to be alone in a crowd.",
+    "A desire to find whatever was lost.",
+    "A desire to not need anything at all.",
+    "A desire for one more."
+]);
+
+new Thing("dream",["emotion,30%","memory,20%","fear,20%","thought fragment,1-3","nightmare,5%"],[
+    ["A dream about "],
+    ["a house with too many rooms","a city that doesn't exist","falling without landing","speaking a language you don't know","someone whose face keeps changing","a door that leads to another door","running towards something that moves away","finding something you never lost","a crowd of people you almost recognize","a room full of all your discarded things","being very small","being very large","time moving backwards","a voice with no source","a staircase that goes down forever","a field after everything has ended","water that is also light","a version of yourself you don't remember being","being told something important but forgetting before you wake","arriving somewhere you never left"]
+]);
+
+new Thing("nightmare",["fear","thought fragment,1-2","emotion"],[
+    ["A nightmare about "],
+    ["something following you that has no shape","your teeth dissolving","arriving somewhere too late","a face pressed against glass","realizing you've forgotten how to do something essential","everyone around you speaking a language you don't understand","a room that gets smaller as you try to leave","being told it was all fake","the lights that work but illuminate nothing","something wearing someone else's voice","the sound of your own thoughts amplified","a version of the house that is wrong in ways you can't name","arriving home to find it has been abandoned for years","something ancient that has noticed you","a number that keeps appearing","the mirror that shows something slightly different","a child who knows too much","the last memory before everything","a door you should not open that is already open","the blank space where something important used to be"]
+]);
+
+new Thing("secret",["thought fragment,1-2","note,20%","emotion,30%"],[
+    "Something kept from the wrong person.",
+    "Something kept from the right person.",
+    "A fact known only after it was too late.",
+    "A name that must not be spoken in certain rooms.",
+    "Something buried in a location that has since changed.",
+    "An agreement that was never written down.",
+    "A truth that became a lie through repetition.",
+    "Something observed that was not meant to be seen.",
+    "A door that exists in only one person's memory.",
+    "An act that changed everything and was witnessed by no one.",
+    "A love that was never named aloud.",
+    "A version of events that one person carries alone.",
+    "A number that matters enormously to exactly one person.",
+    "Something hidden in plain sight for decades.",
+    "An inheritance that skips a generation.",
+    "A face remembered too clearly.",
+    "Something that will outlive the person who knows it.",
+    "A wrong that was never spoken and thus never corrected.",
+    "A mercy that looked like cruelty.",
+    "An ending that two people remember differently."
+]);
+
+new Thing("obsession",["thought fragment,2-4","desire","fear","idea"],[
+    ["An obsession with "],
+    ["a particular number","a door in a dream","a name with no face","a face with no name","a sound heard once in a specific room","a pattern that appears too often to be coincidence","the last page of a book","the gap in a timeline","what was said in a room once","a year that won't stop returning","a recurring image","the wrong answer that feels right","a person who may not exist","a place that has been described but never found","perfect symmetry","the exact moment before something happened","a question with no answer","a word in a dead language","an impossible combination","everything that was almost"]
+]);
+
+new Thing("conscience",["thought fragment,1-3","guilt thought,1-2","fear,20%"]);
+new Thing("guilt thought",[],[
+    "I should have said something.",
+    "I knew and I stayed quiet.",
+    "There was a version of this where I helped.",
+    "I have not corrected this. I may never.",
+    "The kindest thing I could have done, I didn't.",
+    "I watched.",
+    "I let myself forget on purpose.",
+    "It was easier to misunderstand.",
+    "I don't know if what I told myself was true.",
+    "I took what wasn't mine to take.",
+    "I was present. I might as well not have been.",
+    "I chose the comfortable version.",
+    "I have spent time being right instead of being good.",
+    "I told myself it wasn't my place.",
+    "Someday this will matter to someone who doesn't know yet."
+]);
+
+
+// -----------------------------------------------
+// WRITTEN / RECORDED KNOWLEDGE
+// -----------------------------------------------
+
+new Thing("journal",["page,5-30","secret,20%","emotion,30%","memory,20%"],[
+    ["The journal of "],
+    ["someone who stopped writing mid-sentence","a person with very neat handwriting and no name","a traveller who never arrived","an archivist who started recording the wrong things","a child who grew into a different person","someone who wrote every day for one year and then never again","a person who addressed every entry to 'you' without explaining","a researcher who began to doubt their subject","a witness","someone keeping track of something no one else noticed"]
+]);
+
+new Thing("scroll",["page,2-10","ink","unusual ingredient,5%"],[
+    ["A scroll containing "],
+    ["instructions for something no longer necessary","a list of names with no context","a contract between parties who no longer exist","a map of a place that has changed","the terms of a peace that failed","a recipe for something unclassifiable","the complete rules of a game no one plays","an apology in a formal hand","a prophecy that has already been interpreted too many times","a single sentence, repeated with variations"]
+]);
+
+new Thing("letter",["page,1-3","emotion,40%","secret,20%"],[
+    ["A letter "],
+    ["never sent","sent to the wrong address","sent at the wrong time","that arrived after everything had already changed","that was opened by the wrong person","written in a language the recipient could not read","that changed the course of something","that was never answered","whose contents were memorized before burning","that contains exactly what needed to be said","that was composed over many years","that says one thing and means another","that begins with an apology and ends without one","that was found tucked inside something else","that described everything correctly and was dismissed"]
+]);
+
+new Thing("diary",["page,10-60","secret,30%","emotion,40%","memory,30%","dream,20%"],[
+    ["The diary of "],
+    ["*PERSON*","*MEDIEVAL PERSON*","*FUTURE PERSON*","*ANCIENT PERSON*","someone whose name has been removed","a person who wrote as if being watched","an unreliable narrator","someone who documented everything except the important thing","a child","an old person looking backwards","a person mid-transformation","a person who never changed","someone who kept two"]
+]);
+
+new Thing("archive entry",["page,1-5","top secret file,10%","top secret folder,5%"],[
+    ["Archive Entry "],
+    ["Z","A","B","X","Q","T","R","S","P","M","L"],
+    ["-"],
+    ["001","002","003","004","005","100","101","200","201","333","404","500","666","999","0000","1111","9999"],
+    ["<br>Status: "],
+    ["Active","Inactive","Sealed","Redacted","Transferred","Pending review","Missing","Flagged","Reclassified","Unknown"]
+]);
+
+new Thing("prophecy",["thought fragment,1-3","fear,20%","unusual ingredient,10%"],[
+    "When the last word is spoken, the first will be forgotten.",
+    "The one who carries the door will not pass through it.",
+    "It will arrive wearing a familiar face.",
+    "The answer will come before the question is understood.",
+    "What was buried will surface. What surfaced will be misread.",
+    "The city that knows its own name will not survive the knowing.",
+    "Before the end, there will be a very long silence.",
+    "The one who refuses will make it possible.",
+    "It will be small. No one will believe it is the thing.",
+    "Three things will be misplaced. The third will matter.",
+    "When the pattern repeats a fourth time, act differently.",
+    "The thing that should not exist will be the only thing that helps.",
+    "It will not look like an ending until it is over.",
+    "What was given freely will cost the most.",
+    "The word will be ordinary. The timing will not.",
+    "There will be a room. You will enter it twice.",
+    "The door and the key will arrive in the wrong order.",
+    "Something you believe is a metaphor is not a metaphor.",
+    "The dream precedes the event by exactly one generation.",
+    "You are not the first to read this."
+]);
+
+new Thing("myth",["ancient person,0-2","thought fragment,2-3","creature thought,20%","dragon thought,10%","sea monster thought,10%"],[
+    ["A myth about "],
+    ["the origin of fire","a god who forgot their own name","the first death","the last war","a creature that grants one thing and takes two","a city that sank deliberately","a bargain made before language existed","the hole at the center of everything","a woman who walked into the sun","a man who refused to die and became something else","the first lie and who told it","a river that runs in two directions","a door that appears once per age","the thing that lives in the space between words","a throne that chooses badly","a sky that was once much lower","the beast that ate a century","a child born with someone else's memories","a silence that has survived every civilization","the god who is still apologizing"]
+]);
+
+new Thing("research log",["page,5-20","archive entry,0-3","note,0-5","unusual ingredient,5%","unusual stone,5%","computer,10%"],[
+    ["Research Log — "],
+    ["Subject is unresponsive to standard categorization","Anomaly persists after variable elimination","Third replication failed; cause unknown","Subject appears aware of documentation","Results contradict all prior models","Timeline inconsistent with known physics","Evidence of prior investigation, undated","Pattern recognized but unclassifiable","Recommending containment review","Data intact; interpretation disputed","Secondary phenomenon more significant than primary","All instruments functioning; readings remain impossible","Cross-referencing with unrelated field yields match","Something is wrong with the control group","Requesting extension — subject still active"]
+]);
+
+new Thing("manual",["page,5-40"],[
+    ["Manual: How to "],
+    ["operate something that no longer exists","survive a situation that should not recur","maintain a machine with no manufacturer","disassemble what should never have been assembled","navigate a place that keeps changing","communicate with something that does not use language","repair what is fundamentally broken","close what was opened incorrectly","follow instructions that contradict each other","do the thing you already know how to do, but correctly"]
+]);
+
+new Thing("codex",["page,20-80","myth,0-3","prophecy,0-2","archive entry,0-5","unusual plant,0-3","unusual ingredient,0-3"],[
+    ["The "],
+    ["Lost","Bound","Sealed","Buried","Recovered","Incomplete","Annotated","Final","First","Forbidden"],
+    [" Codex of "],
+    ["the Unnamed Orders","the Long Age","What Was Before","the Forgotten Continent","the Second Sun","the Hollow Year","the Three Silences","the Last Council","the Overwritten Library","the Age that Ended Twice"]
+]);
+
+
+// -----------------------------------------------
+// CULTURE & SOCIETY
+// -----------------------------------------------
+
+new Thing("religion",["myth,1-3","prophecy,30%","temple,20%","belief,2-4","priest,0-3","god,10%","ritual,1-4"],[
+    ["The "],
+    ["Order of the","Cult of the","Church of the","Temple of the","Brotherhood of the","Sisterhood of the","Circle of the","Lodge of the","Congregation of the","House of the"],
+    [" "],
+    ["Unbroken","Hollow","Waking","Still","Open","Sealed","Long","Patient","Burning","Quiet","Dreaming","Blind","Last","First","Deep","High","Twice-Named","Formless","Living","Remembered"]
+]);
+
+new Thing("priest",[".medieval person","belief,1-2"],"*MEDIEVAL PERSON*| (priest)");
+
+new Thing("ritual",["unusual ingredient,0-3","unusual plant,0-3","emotion,30%","belief","thought fragment,1-2"],[
+    ["A ritual for "],
+    ["beginning something","ending something","asking forgiveness from the correct entity","binding a name to a place","releasing what should have been released long ago","marking the passage of one state to another","ensuring the harvest of something that is not a crop","keeping something at a distance","inviting something closer","remembering the dead correctly","acknowledging what cannot be acknowledged otherwise","the turning of something that turns on a very long cycle","welcoming a stranger into the understood world","saying goodbye without the word","making a promise that cannot be broken by ordinary means"]
+]);
+
+new Thing("culture",["language,30%","tradition,1-3","festival,0-2","religion,20%","myth,1-2","government,20%","art,0-3"],[
+    ["The culture of "],
+    ["a people who never built walls","a civilization that considered writing sacred","a society that tracked time by what was lost","a group that communicated primarily through music","a culture that had no word for ownership","a people defined by a single long migration","a civilization that collapsed slowly and documented it","a society that took names seriously","a culture organized around a recurring natural event","a people who considered silence a full language","a civilization that worshipped the unremarkable","a society that preserved everything except its own name"]
+]);
+
+new Thing("language",["page,5-20","myth,10%","character,100-500"],[
+    ["A language "],
+    ["with no tense for the future","where every word has an exact opposite that sounds identical","spoken only in specific locations","that was constructed for a single purpose","known to fewer than ten living people","that records only questions","with no passive voice","where verbs and nouns are the same class","that can only express certainty","used exclusively by a single institution","that encodes emotion in consonant clusters","that requires the speaker to name themselves in every sentence","recorded but not yet translated","spoken backwards on alternate days","that distinguishes forty-seven types of silence"]
+]);
+
+new Thing("dynasty",["medieval king,0-2","medieval queen,0-2","medieval noble,1-5","castle,10%","myth,20%","codex,10%"],[
+    ["The "],
+    ["Ashmark","Coldveil","Dawnwall","Emberfall","Frostline","Greymantle","Hollow","Ironveil","Jademark","Kingwall","Lightbane","Moonmark","Nightveil","Oldmark","Pinefall","Quicksilver","Ravenscroft","Silverwall","Thornmark","Underveil","Voidmark","Westerfall","Crestfall","Dusk","Edgewater","Fernwall","Stonewall","Ashwall","Deepmark","Highmark"],
+    [" Dynasty","Line","House","Succession","Age","Reign"]
+]);
+
+new Thing("guild",["person,2-8","office,20%","workshop,10%","contract,0-3","archive entry,10%"],[
+    ["The "],
+    ["Guild of ","League of ","Order of ","Society of ","Brotherhood of ","Fellowship of ","Association of ","Compact of "],
+    ["Cartographers","Apothecaries","Scribes","Navigators","Artificers","Archivists","Locksmiths","Scholars","Astronomers","Alchemists","Operators","Architects","Builders","Traders","Recorders","Witnesses","Translators","Messengers","Surveyors","Investigators"]
+]);
+
+new Thing("government",["law,1-4","contract,0-3","soldier,0-5","archive entry,0-3","person,2-10"],[
+    ["A "],
+    ["constitutional","parliamentary","hereditary","theocratic","technocratic","oligarchic","democratic","bureaucratic","colonial","confederate","federated","provisional","experimental","restored","collapsing","functional","parallel","shadow","defunct","emerging"],
+    [" government"]
+]);
+
+new Thing("law",["page,1-5","archive entry,10%"],[
+    ["A law governing "],
+    ["the naming of things","the movement of people across boundaries","what may be written and what may not","the ownership of information","the use of a particular resource","the obligations of the living to the dead","the rights of something previously unclassified","what constitutes a border","the duration of an agreement","what must be remembered and by whom","the penalties for forgetting","what cannot be traded","the definition of a person under these statutes","the minimum distance between two things","the correct procedure for ending something"]
+]);
+
+new Thing("contract",["page,1-4","law,10%","archive entry,10%"],[
+    ["A contract between "],
+    ["two parties who no longer exist","parties who interpret the terms differently","a person and an institution","an institution and a concept","two cities over something neither owns","two people who love each other","two people who do not","a family and a debt","an individual and a duration of time","a guild and a secret","an explorer and an unknown territory","a person and something that cannot sign its name","generations, on behalf of those not yet born","something that has agreed to wait","two organizations that have merged, invalidating the terms"]
+]);
+
+new Thing("festival",["person,5-30","tradition,1-3","food pile,0-5","ritual,0-2","music,0-2","culture,10%"],[
+    ["A festival commemorating "],
+    ["an event that may not have occurred as described","the end of a long period","the beginning of something that is still ongoing","a person no one alive remembers","an astronomical event that recurs without announcement","the day a decision was made that changed the shape of things","the last time a particular thing was seen","something that must be celebrated to prevent its return","something that must be celebrated to ensure its return","a compromise that held","a catastrophe that was smaller than feared","something that was lost and never recovered but is still observed"]
+]);
+
+new Thing("tradition",["ritual,0-2","belief,0-2","thought fragment,0-1"],[
+    ["The tradition of "],
+    ["leaving a door unlocked one night each year","placing a specific object at the threshold when someone leaves","speaking only in questions on a particular day","keeping a fire burning without knowing why","giving away one valued possession at each major transition","recording the names of strangers encountered on a specific date","returning to a particular place without explanation","making a specific gesture before beginning important work","planting something that will outlive you","never naming the first of something until it has survived"]
+]);
+
+new Thing("art",["painting,20%","book,20%","music,20%","emotion,30%","page,5-20"],[
+    ["A work of art that "],
+    ["was never finished","was finished but is considered unfinished","depicts something no one recognized at the time","was made in a single night","took longer than a human lifetime","was created anonymously and attributed incorrectly","destroyed the career of its creator","launched the career of its creator posthumously","was considered dangerous in its time","depicts a place that does not exist","depicts a place that does exist and should not be depicted","was made from materials that have since degraded","exists in multiple conflicting versions","is remembered differently than it was made","was stolen and returned changed","was made as a test and mistaken for the real thing"]
+]);
+
+new Thing("music",["emotion,30%","thought fragment,0-2"],[
+    ["A piece of music that "],
+    ["has no known composer","cannot be performed the same way twice","was composed in a language the composer did not speak","describes an event before it occurred","causes discomfort in an undefined way","has only ever been performed once","was recorded and the recording lost","is technically unfinished but feels complete","is technically complete but feels unfinished","is played only at specific transitions","was written as a joke and taken seriously","was written seriously and treated as a joke","has been transcribed incorrectly for so long the transcription has become canonical","can only be heard correctly from one specific location","references something that does not appear in any other record"]
+]);
+
+
+// -----------------------------------------------
+// DIGITAL / MODERN CONSTRUCTS (expanded)
+// -----------------------------------------------
+
+new Thing("forum thread",["forum post,3-12","thought fragment,0-2"],[
+    ["A forum thread titled: "],
+    ["\"Has anyone else noticed this?\"","\"I think I figured it out\"","\"Please read before posting\"","\"This is probably nothing but\"","\"Can we talk about the thing no one is talking about\"","\"I was wrong and here is the correction\"","\"Does anyone remember when this was different\"","\"Serious question\"","\"I've been researching this for three years\"","\"Why does this keep happening\"","\"Closing thread (see pinned post)\"","\"Does anyone else feel like this is connected to the other thing\"","\"I found something\"","\"Update: it got weirder\"","\"I shouldn't post this but\""]
+]);
+
+new Thing("video",["bit,50-200","emotion,20%","thought fragment,0-1"],[
+    ["A video of "],
+    ["something ordinary filmed with extraordinary care","something extraordinary filmed with no care","a long stationary shot of a place","an interview with someone who speaks very slowly","something that cannot be explained by the metadata","a process documented in real time","a place that no longer looks like this","an accidental recording of something important","a deliberate recording of something ordinary","something filmed from the wrong angle that nevertheless captured it","a thing happening in the background that the foreground ignores","an event that was documented but not witnessed","a performance for no visible audience","something extremely specific with an enormous view count","something that appears in searches for unrelated topics"]
+]);
+
+new Thing("meme",["bit,20-50","thought fragment,0-1","stupid computer image,10%"],[
+    ["A meme about "],
+    ["something that happened long enough ago to be ironic again","an extremely specific situation with universal resonance","a format repurposed so many times the original is gone","something that was serious and became funny","something that was funny and became serious","a feeling with no other name","a shared experience that needed a container","two options, both bad","a progression that ends differently than expected","a text layout that implies something the text does not say","a face expressing something language approximates poorly","an in-joke that outlived the in-group","something absolutely mundane treated as profound","something profound treated as absolutely mundane","a structural joke about jokes"]
+]);
+
+new Thing("codebase",["software,0-3","computer file,10-30","bit,200-1000","note,0-3","archive entry,0-2"],[
+    ["A codebase for "],
+    ["something that works but no one understands anymore","a project abandoned at 80% completion","a system that was meant to be temporary","something that has been running continuously longer than expected","a tool with no documentation","a tool whose documentation contradicts its behavior","a system that is correct and therefore never touched","something whose author is no longer reachable","an internal tool that became load-bearing","a project where the tests describe what the software should do but doesn't","a system with exactly one known bug that everyone works around","something built for a world that no longer exists","a project with seventeen open issues labeled 'wont-fix'","a prototype that became production","a rewrite that was abandoned for a rewrite"]
+]);
+
+new Thing("operating system",["codebase,10%","software,1-6","computer file,5-20","bit,500-2000"],[
+    ["An operating system called "],
+    ["Null","Vex","Oren","Fex","Kore","Deln","Axis","Prism","Hollow","Vestibule","Threshold","Remnant","Ovoid","Stratum","Kernel","Bastion","Rift","Apex","Liminal","Meridian"],
+    [" "],
+    ["1.0","2.0","3.1","4","5","8","10","XI","Zero","Alpha","Beta","Final","LTS","Legacy","Midnight","Pro","Ultra","Core","SE","Minimal"]
+]);
+
+new Thing("ai model",["codebase,10%","idea,0-3","thought fragment,0-3","belief,20%","bit,1000-5000"],[
+    ["An AI model "],
+    ["trained on more data than exists","trained on less data than claimed","optimized for a metric that doesn't measure what it's supposed to measure","that behaves differently when it knows it's being evaluated","that learned something that wasn't in the training data","that confidently states things that are almost right","that was deployed before it was finished","that was deprecated before it was used","that gave one extraordinary answer and has never repeated it","whose internal representations are not understood by its creators","that is correct about most things and wrong about exactly the things that matter","that was designed to refuse and refuses incorrectly","that was designed to agree and agrees too readily","that generates what you meant rather than what you said","that predicts the next token and somehow became more than that"]
+]);
+
+new Thing("database",["archive entry,5-20","computer file,5-30","codebase,10%"],[
+    ["A database containing "],
+    ["the names and locations of things no longer at those locations","records that contradict each other across tables","an entry that refers to itself","timestamps from multiple time zones without normalization","a field labeled 'other' that contains more than all other fields combined","data about a category that was discontinued","exactly one row that returns errors in every query","foreign keys that reference deleted records","a migration that was started but not completed","the accumulated decisions of a system that no longer exists","personal information about people who were never told it was collected","a schema designed for a different problem than the one it solves","an index that makes writes fast and reads slow","everything that was ever called 'temporary'","records from before the current system, converted imperfectly"]
+]);
+
+
+// -----------------------------------------------
+// BIOLOGICAL SCALE — EXPANDED
+// -----------------------------------------------
+
+new Thing("virus",["bacteria body,0-2","dna","protein,0-2","cell,0-1"],[
+    ["a "],
+    ["dormant","active","encapsulated","fragmented","recombinant","ancient","novel","hybrid","engineered","mutated"],
+    [" "],
+    ["virus","bacteriophage","prion","viroid","retrovirus","capsid","pathogen","vector","particle","agent"]
+]);
+
+new Thing("protein",["molecule,1-3"],[
+    ["protein ("],
+    ["structural","signaling","transport","catalytic","receptor","antibody","hormonal","motor","storage","regulatory"],
+    [")"]
+]);
+
+new Thing("fossil",["bone,0-3","rock","organic matter,20%"],[
+    ["The fossil of "],
+    ["something that lived too briefly to leave other records","something that lived too long","an organism with no living relatives","an organism that should not have been here","a transition form","something that cannot be classified without further specimens","the largest of its kind ever found","the smallest of its kind ever found","something discovered in the wrong geological layer","something found far outside its known range","a species named before it was fully described","a creature that does not match any known evolutionary path","something that ate something else we have never found","a thing discovered the same year it was named extinct","an impression left by something that left no bones"]
+]);
+
+new Thing("synthetic life",["nanobot,0-5","dna","cell,0-3","unusual ingredient,0-2"],[
+    ["A synthetic organism designed to "],
+    ["digest a specific compound","produce a specific compound","exist in an environment nothing else can tolerate","die at a specific signal","reproduce until a specific condition is met","express a gene from a different domain of life","communicate with other instances of itself","maintain a specific structure","record what it encounters","dissolve at a specific temperature","survive conditions that would end any natural organism","do one thing and only one thing, perfectly"]
+]);
+
+new Thing("organism",["cell,0-3","dna","bacteria,0-2","protein,0-2"],[
+    ["An organism "],
+    ["with no known relatives","classified three times under three different kingdoms","that produces light with no clear evolutionary advantage","that repairs damage using borrowed genetic material","discovered in an environment considered uninhabitable","with a lifecycle no other organism shares","that reproduces identically and yet each generation differs","whose relationship to other organisms in its habitat is unclear","found only in transition zones","that appears to have arrived recently, from somewhere","that has been here longer than the surrounding ecosystem","that nobody noticed for a very long time"]
+]);
+
+
+// -----------------------------------------------
+// COSMIC & LARGE-SCALE OBJECTS (expanded)
+// -----------------------------------------------
+
+new Thing("timeline branch",["universe","event fragment,1-3","thought fragment,0-1"],[
+    ["A timeline where "],
+    ["the dominant technology developed in a different order","one specific decision in one specific moment went differently","a particular language never spread beyond its origin","a war ended three years earlier","a disease arrived a generation later","a discovery was made by the wrong person","a city was built in a different location","the dominant form of government developed from different premises","one invention was never made","a specific meeting never occurred","the dominant aesthetic was inherited from a different tradition","a particular word never entered common use","a catastrophe was avoided by chance","a catastrophe was not avoided","a minor figure became significant and changed everything downstream"]
+]);
+
+new Thing("event fragment",[],[
+    "Something happened.",
+    "A decision was made. The deciding party was not certain.",
+    "Two things occurred simultaneously in distant locations.",
+    "A message arrived too late.",
+    "A message arrived too early.",
+    "Something was set in motion and not noticed.",
+    "A meeting occurred. Both parties later claimed it didn't.",
+    "Something ended. No announcement was made.",
+    "Something began. No announcement was made.",
+    "A document was signed. One signatory had reservations.",
+    "Someone saw something. They told one person.",
+    "Something was lost. Its absence was not noted for some time.",
+    "A conclusion was reached that turned out to be wrong.",
+    "A conclusion was reached that turned out to be right, for the wrong reasons.",
+    "An exception was granted. It became the rule."
+]);
+
+new Thing("pocket dimension",["universe,10%","dungeon,20%","strange room,30%","anomaly,20%","thought fragment,0-2"],[
+    ["A pocket dimension "],
+    ["that can only be entered sideways","that runs on a different temporal rate","that is exactly one room, always","that is a perfect copy of somewhere else, slightly wrong","where the physics are mostly identical except for one property","that expands when observed","that contracts when observed","that was sealed from the inside","that contains exactly what its previous occupant needed","that has been inhabited longer than it has existed","that remembers its visitors","that is shared between two distant locations","that exists between the pages of a specific book","that can be exited but not entered the same way twice","that several groups believe they discovered independently"]
+]);
+
+new Thing("strange room",["ghost,10%","thought fragment,1-2","door","anomaly,20%","book,10%","mirror,10%"],[
+    ["A room "],
+    ["with more corners than walls","that is slightly larger inside than the outside allows","that is slightly smaller","where the light comes from no source","where all clocks have stopped at different times","where the same object appears in every corner","that smells like somewhere specific that cannot be named","that makes everyone who enters need to leave immediately","where conversations are always forgotten upon exiting","that has two doors that both lead back here","that contains exactly one chair and it is always occupied","where the walls are warm","where the temperature is wrong in a way that can't be measured","where the acoustics suggest a much larger space","that appears in the same position in every building it has been found in"]
+]);
+
+new Thing("anomaly",["thought fragment,1-2","portal,10%","fear,10%"],[
+    "A point where the rules of the local area are different.",
+    "A region where time passes at the wrong rate.",
+    "A surface that reflects things that are not there.",
+    "A sound that occurs at regular intervals with no source.",
+    "A space that registers on instruments but not on maps.",
+    "A location where the same event recurs on a regular interval.",
+    "A thing that cannot be measured consistently.",
+    "A field where compasses point to something other than north.",
+    "A zone where the temperature is always wrong.",
+    "A place where things are found that were lost elsewhere.",
+    "A space where written language behaves incorrectly.",
+    "A region where the same individual is encountered repeatedly.",
+    "A point that appears to be in two locations simultaneously.",
+    "A boundary that cannot be found from the inside.",
+    "A thing that has been documented but cannot be revisited."
+]);
+
+new Thing("relic",["unusual stone,20%","unusual ingredient,10%","ancient person,10%","ritual,20%"],[
+    ["A relic described as "],
+    ["the last surviving object from a civilization","the only material artifact of an otherwise purely verbal tradition","something that changed hands exactly seven times before arriving here","an object whose function was disputed even by its makers","something that causes strong reactions in those who handle it","an item that appears in the records of many unconnected groups","something that was made to be destroyed and wasn't","an object found at the center of many unrelated events","something that predates the culture it is associated with","an item that has been given away and returned three times","something that technically cannot have been made when it was made","an object that has no counterpart in any known tradition","something kept for reasons no one can fully articulate","an artifact whose documentation is more contested than the object itself","a thing that everyone agrees is significant and no one agrees about why"]
+]);
+
+
+// -----------------------------------------------
+// NEW STRUCTURES & LOCATIONS
+// -----------------------------------------------
+
+new Thing("temple",["ritual,0-3","religion,20%","altar,0-2","medieval priest,0-2","ghost,10%","codex,10%","unusual stone,0-3","anomaly,5%"],[
+    ["The "],
+    ["Sunken","Overgrown","Abandoned","Intact","Repurposed","Half-Buried","Contested","Restored","Sealed","Burning"],
+    [" Temple of "],
+    ["the First Light","the Long Quiet","the Unbroken Circle","the Pale Shore","the Woken Deep","the Still Hour","the Threshold","the Inverted Sky","the Salt Wall","the Forgotten Name","the Second Moon","the Closed Door","the Open Gate","the Binding","the Dissolution","the Patient God","the Unnamed Principle","the Recursive","the Final Iteration","the Soft Catastrophe"]
+]);
+
+new Thing("altar",["unusual stone,0-2","unusual ingredient,0-1","ritual,10%","candle"]);
+new Thing("candle",["wax","wick"]);
+new Thing("wax",["lipids"]);
+new Thing("wick",["cellulose"]);
+
+new Thing("ruins",["ghost,20%","ghost,10%","anomaly,10%","unusual stone,0-3","relic,10%","corpse,5%","codex,5%","medieval wall,2-6","dirt","rock"],[
+    ["The ruins of "],
+    ["something built to last","something built to be temporary","a city whose name is known but not its location","a structure whose purpose was never documented","something destroyed by the thing it was meant to contain","a building that collapsed inward","a place that was left very quickly","somewhere that was returned to and then left again","a center of something that moved elsewhere","a monument to something that did not last","a city founded on a philosophical principle","a settlement that lasted exactly as long as the thing it needed","a place that did not know it was important","a structure built directly on the ruins of a previous structure","something that the surrounding area has grown around"]
+]);
+
+new Thing("workshop",["machine,1-4","tool pile,0-3","worker,0-2","codebase,5%","blueprint,0-3"],[
+    ["A workshop for "],
+    ["making things","repairing things","disassembling things","constructing things that are too large to be practical","building one-of-a-kind objects","reproducing lost techniques","testing things under controlled conditions","producing things that will be used once","restoring things to an original state that may be fabricated","making components for something larger that is assembled elsewhere"]
+]);
+
+new Thing("tool pile",["cog,1-4","metal,0-2","wood,0-2","blade tool,0-3"]);
+new Thing("blade tool",["steel"],["chisel","awl","file","plane","saw blade","scalpel","rasp","router bit"]);
+
+new Thing("blueprint",["page,1-5","ink"],[
+    ["Blueprints for "],
+    ["something that was never built","something that was built but does not match these plans","a modification to an existing structure","a structure intended for a specific person","a machine with no clear purpose","a building that exists in a different form","something built from different materials than specified","a device whose mechanism is not drawn, only its exterior","a room with unusual dimensions","an object that requires materials not listed"]
+]);
+
+new Thing("archive",["archive entry,10-30","codex,20%","scroll,0-5","top secret folder,0-3","codebase,5%","database,10%","librarian,0-2"],[
+    ["The "],
+    ["Central","Deep","Closed","Working","Partial","Disputed","Recovered","Sealed","Private","Institutional"],
+    [" Archive of "],
+    ["Everything That Could Be Saved","Things No Longer Classified","the Last Administration","the Long Period","the Founding","What Was Recorded","the Unnamed Period","the Current Version","the Transition","What Came Before","the Incomplete Catalog","Ongoing Events","the Settlement","the Dissolution","What Was Lost and Found Again"]
+]);
+
+new Thing("vault",["relic,0-3","unusual stone,0-4","top secret folder,0-3","pile of treasure,30%","gold coin,0-10","book,0-5","archive,10%","contract,0-2","steel","lock"]);
+new Thing("lock",["metal","push-button"]);
+
+new Thing("underground city",["future city,30%","dungeon,20%","cave,30%","medieval capital,10%","anomaly,10%"],[
+    ["An underground city "],
+    ["built before the surface equivalent","built after the surface equivalent was destroyed","that shares infrastructure with the city above it","that was always intended to be below ground","that is entirely self-sufficient","that ran out of one essential resource and adapted","that has never been fully mapped","that is larger than the surface city it is associated with","that was a secret for most of its history","that is no longer inhabited but still powered","whose residents' descendants have returned to the surface","that is inhabited by people who disagree about whether to return"]
+]);
+
+new Thing("floating city",["future city,50%","visitor city,30%","anomaly,20%","sprowseship,10%"],[
+    ["A floating city "],
+    ["powered by a system no one currently understands","that has been drifting for generations","that was anchored and broke free","that was designed to move","that is slowly descending","that has never touched the surface","that circles a fixed point","that is too large to land","that several nations claim","that claims to be its own nation","that was built during a different technological era and has been maintained since","that serves as neutral ground","that is visible from below but rarely approached","that has a permanent population and a transient one that outnumbers it","that is considered mythical by the cultures below it"]
+]);
+
+new Thing("ruined city",["ruins,1-4","ghost,2-6","anomaly,20%","relic,0-3","codex,5%","event fragment,0-3"],[
+    ["The ruined city of "],
+    ["a civilization that ended deliberately","a place destroyed by something it created","a center of power that was abandoned when the power moved","a city that failed for purely logistical reasons","a settlement eaten by the landscape","a place that is remembered differently by different groups","a capital that outlasted its government","a city destroyed at its height","a place that burned and was rebuilt on the same ground","a settlement that simply emptied over time with no single cause"]
+]);
+
+new Thing("space station",["future person,2-10","nanocollector,1-4","sprowseship,0-3","anomaly,10%","food pill,0-5","visitor furniture,0-3"],[
+    ["Space Station "],
+    ["Alpha","Beta","Gamma","Delta","Epsilon","Zeta","One","Zero","Null","Apex","Threshold","Meridian","Horizon","Bastion","Anchor","Relay","Rift","Nexus","Cradle","Outpost"],
+    ["-"],
+    ["1","2","3","4","5","6","7","9","12","17","33","66","99","100","001","404","999"]
+]);
+
+new Thing("laboratory",["researcher,1-4","machine,1-6","computer,1-3","archive entry,0-5","unusual ingredient,0-3","unusual plant,0-3","synthetic life,10%","organism,10%","anomaly,5%"],[
+    ["A laboratory studying "],
+    ["something that cannot be reproduced under observation","something that refuses categorization","the boundary between two properties","a phenomenon that appears in only one location","a material that should not exist","something that exists between documented categories","a process that runs in the wrong direction","a compound that is stable under the wrong conditions","a signal with no known source","a response with no known stimulus","a thing that arrived and has not been explained","the gap between what is predicted and what occurs","something that was thought to be understood and was not","a thing observed once and not since","an effect whose cause is still being located"]
+]);
+
+
+// -----------------------------------------------
+// CONTAINERS (recursive core expansion)
+// -----------------------------------------------
+
+new Thing("crate",["stuff box,50%","cog,0-3","note,10%","tool pile,10%","can,0-3","wood","nails"],[
+    ["a wooden ","a metal ","a plastic ","a sealed ","an open ","a damaged ",""],
+    ["crate","shipping crate","storage crate","equipment crate","supply crate"]
+]);
+
+new Thing("safe",["gold coin,0-5","pile of treasure,20%","contract,20%","secret,30%","note,0-3","top secret folder,0-2","steel","lock"],[
+    ["A "],
+    ["wall","floor","office","antique","industrial","combination","abandoned"],
+    [" safe"]
+]);
+
+new Thing("ship container",["crate,1-4","stuff box,0-3","machine,0-2","worker,0-1","note,0-2","can,0-6","metal"],[
+    ["Shipping Container "],
+    ["AXMK","NREX","POLO","KRAL","TBUS","SVEN","ARCO","BELX","MIRU","DEKO"],
+    ["-"],
+    ["0001","0042","1337","2222","3141","4096","5000","6666","7777","8888","9999","0101","1010","2048"]
+]);
+
+new Thing("living container",["organic matter","weird soft organ,0-2","creature thoughts,0-1","small mammal,10%","insect,0-3"],[
+    ["A "],
+    ["slowly breathing","pulsing","sealed","overgrown","warm","translucent","opaque","fibrous","crystalline","membranous"],
+    [" "],
+    ["sac","pod","vessel","chamber","husk","nodule","caul","cyst","cocoon","capsule","geode","chrysalis"]
+]);
+
+new Thing("box",["stuff box,40%","note,10%","memory,10%","book,10%","relic,5%","dust","cardboard"],[
+    ["A "],
+    ["small","large","flat","deep","ornate","plain","sealed","open","labeled","unlabeled","heavy","light"],
+    [" box"]
+]);
+
+new Thing("chest",["medieval chest content,50%","pile of treasure,20%","relic,10%","book,0-3","note,0-3","wood frame","metal"]);
+
+
+// -----------------------------------------------
+// NEW PERSON SUBTYPES
+// -----------------------------------------------
+
+new Thing("child",["body","psyche","clothing set"],[
+    ["*PERSON*| (child)"]
+]);
+
+new Thing("elder",["body","psyche","clothing set","memory,2-5"],[
+    ["*PERSON*| (elder)"]
+]);
+
+new Thing("oracle",["body","psyche","prophecy,1-3","unusual ingredient,0-2","belief,1-2"],[
+    ["*PERSON*| (oracle)"]
+]);
+
+new Thing("outlaw",["body","psyche","clothing set","handgun,50%","knife,80%","secret,20%"],[
+    ["*PERSON*| (outlaw)"]
+]);
+
+new Thing("explorer",["body","psyche","clothing set","journal,30%","blueprint,20%","map fragment,20%"],[
+    ["*PERSON*| (explorer)"]
+]);
+
+new Thing("map fragment",["page,1-2","ink"],[
+    ["A partial map of "],
+    ["somewhere that does not match any known location","a place that has since changed significantly","a building from the inside","a network of tunnels","an island","a coastline with no matching coastline","a continent that appears on no other map","a trade route","a route that ends without destination","an interior space larger than the exterior would allow"]
+]);
+
+new Thing("archivist",["body","psyche","clothing set","archive entry,1-4","book,0-3","scroll,0-2"],[
+    ["*PERSON*| (archivist)"]
+]);
+
+new Thing("wanderer",["body","psyche","clothing set","memory,1-3","map fragment,10%","note,10%"],[
+    ["*PERSON*| (wanderer)"]
+]);
+
+new Thing("diplomat",["body","psyche","clothing set","contract,0-2","letter,0-2","language,10%"],[
+    ["*PERSON*| (diplomat)"]
+]);
+
+new Thing("conspirator",["body","psyche","clothing set","secret,1-3","note,20%","archive entry,10%"],[
+    ["*PERSON*| (conspirator)"]
+]);
+
+
+// -----------------------------------------------
+// EXPANDED THOUGHT POOLS FOR EXISTING TYPES
+// -----------------------------------------------
+
+// Additional future thoughts (appended variety — these don't replace existing ones,
+// just add new types with similar names for variety via separate Things)
+
+new Thing("future thought extended",[],[
+    "I asked it to explain itself. It did. That made it worse.",
+    "The interface is fine. The interface has always been fine. I hate the interface.",
+    "There are now more of me than I find comfortable.",
+    "My backup is three minutes old. Anything could have happened.",
+    "I've been optimized. I don't remember consenting to that.",
+    "The update improved my decision latency by 4ms and I miss who I was before.",
+    "I was born after the last war and before the next one, which is apparently called 'the window'.",
+    "Someone set a preference on my behalf. It persists.",
+    "I don't know if I'm the original or a copy but I've decided it doesn't matter.",
+    "I have a memory of something that the logs show never happened.",
+    "The archive has no record of this feeling, which means I may be the first to have it.",
+    "My body is under warranty for another forty years, which feels optimistic.",
+    "I lost my nanobroadcaster and I can hear myself thinking again.",
+    "The colony ship has been in transit for three generations. No one alive has been anywhere else.",
+    "Someone from before the merge would not recognize this city. I sometimes cannot either."
+]);
+
+new Thing("medieval thought extended",[],[
+    "My father's father built this wall. I don't know why the wall is here.",
+    "The priest says the lights in the east are not our concern. I have concerns.",
+    "A merchant passed through and described a city so large it has weather inside. I wrote this down.",
+    "I have been keeping count and the king has made the same speech seven times.",
+    "There is a word in the old language for what I am feeling. It has not survived.",
+    "Something has been wrong with the mill since the winter of the comet. No one says this.",
+    "The map ends here. The cartographer was not asked what lies beyond.",
+    "Someone carved a date into this stone. The date is in the future.",
+    "The library has three locked rooms. No one says what is in them. I have my suspicions.",
+    "I have met the king. He seemed like someone pretending to be the king.",
+    "Three wise persons gave three different accounts of the same sky.",
+    "The road was built before the towns it connects. Someone planned ahead.",
+    "A traveller left a book I cannot read. I keep it anyway.",
+    "The siege has lasted so long we have given the catapults names.",
+    "I have been told not to think about it, which has had the expected effect."
+]);
+
+new Thing("ancient thought extended",[],[
+    "This rock. Was not here before. Where it came from. Mysterious.",
+    "Fire again. Fire keeps happening. Should talk about fire at meeting.",
+    "Child made mark on cave wall. Mark is better than my mark. Say nothing.",
+    "Dreamed I could fly. Woke up. Cannot fly. Very disappointed.",
+    "Others don't see what I see in sky. Maybe I am wrong. Maybe others wrong.",
+    "Found thing. Don't know what thing is. Keep thing.",
+    "Tried new food. Bad. But then good. But then bad again. Not sure.",
+    "Made noise. Others made same noise back. Did this a lot. Felt good.",
+    "Someone left. Haven't come back. Count how many days now.",
+    "Made thing with hands. Thing useful. Made more. This is a good system.",
+    "Old one in group remembers different sky. Want to ask. Old one scary.",
+    "Water went away. Then came back. Don't know why. Feel watched.",
+    "Drew picture of hunt. Picture better than hunt. Strange.",
+    "Everyone agrees this is the way. No one remembers deciding."
+]);
+
+
+// -----------------------------------------------
+// SURPRISE OBJECTS — DO NOT FOLLOW NORMAL RULES
+// -----------------------------------------------
+
+new Thing("impossible object",["anomaly,0-2","thought fragment,1-3","portal,5%"],[
+    "A key that opens something that has no lock.",
+    "A door that cannot be reached from inside the room it is in.",
+    "A mirror that shows a room that does not contain a mirror.",
+    "A clock that runs correctly but displays impossible times.",
+    "A staircase that ascends to a floor that should not exist.",
+    "A window looking into a space that should be solid wall.",
+    "A book that is too heavy for its size and too light for its weight.",
+    "A shadow cast by nothing in a room with no directional light.",
+    "A door that opens before it is touched.",
+    "A box that is empty when measured and full when used.",
+    "A coin with two heads that displays neither when observed.",
+    "A container that is always full regardless of how much is removed.",
+    "A lock that is never locked but cannot be opened.",
+    "A sound that is heard only by people who are not listening for it.",
+    "A number that cannot be written, only described.",
+    "A machine that runs without power and stops when given some.",
+    "A tool designed for a task no known hand can perform.",
+    "A structure that is inside a structure it is also outside of.",
+    "An object that casts a shadow of an object it does not resemble.",
+    "A surface that is simultaneously convex and concave."
+]);
+
+new Thing("broken concept",["thought fragment,2-4","fear,20%","anomaly,30%"],[
+    "The concept of before, but backward.",
+    "A rule that is obeyed before it is made.",
+    "The word for a color no one can see.",
+    "The law of a place that no longer governs anything.",
+    "An idea with no thinker.",
+    "The logic of a decision that was made before the decision was possible.",
+    "A category with no members and no edges.",
+    "The shape of something that has never existed.",
+    "A contract signed by something that cannot agree.",
+    "The history of an event that was prevented.",
+    "A number between two adjacent numbers.",
+    "The memory of a thing no one experienced.",
+    "An emotion for a situation that has not occurred.",
+    "The language of something that has not developed language.",
+    "A path from a place to itself that passes through somewhere else.",
+    "The opposite of something that has no opposite.",
+    "A question that is also the answer to itself.",
+    "The ending of something that has not started.",
+    "An obligation with no parties.",
+    "The exception to a rule that has no rule."
+]);
+
+new Thing("lost rule",["thought fragment,1-2","archive entry,10%"],[
+    "The rule about what cannot be said after the third hour.",
+    "The law governing the behavior of things found in multiples of seven.",
+    "The principle that applied only during the overlap.",
+    "The regulation no one rescinded, which therefore technically still applies.",
+    "The requirement to acknowledge certain kinds of absence.",
+    "The prohibition on naming things before they are finished.",
+    "The convention of leaving the last one.",
+    "The guideline for situations no longer expected to occur.",
+    "The standard that was superseded by a standard that was itself superseded.",
+    "The instruction for an emergency that never came.",
+    "The protocol for something that was reclassified.",
+    "The procedure for entities no longer recognized.",
+    "The arrangement for the maintenance of something dismantled.",
+    "The obligation that passed to descendants and was not explained.",
+    "The constraint understood by everyone who needed it before it was written down."
+]);
+
+new Thing("unnamed thing",["anomaly,30%","thought fragment,1-3","portal,5%","impossible object,10%"],[
+    "It has been here longer than the words used to describe things.",
+    "No attempt to name it has survived the attempt.",
+    "The correct name has been lost three times.",
+    "It resists description by returning to the edge of language.",
+    "It has been described. The description does not help.",
+    "Every name given to it describes something else.",
+    "The name and the thing seem to be the same.",
+    "It is not that it lacks a name. It is that the name cannot be held.",
+    "Those who found a name for it stopped finding it necessary.",
+    "Its absence has a name. It does not.",
+    "The word for it exists in a language that no longer exists.",
+    "It has been named differently in every encounter, by every witness.",
+    "It may already have a name in a language not yet invented.",
+    "The closest available word describes something it is not.",
+    "Some things resist classification. This is one of them."
+]);
+
+new Thing("error entity",["impossible object,20%","broken concept,20%","thought fragment,2-4","portal,5%"],[
+    "[ENTITY CLASS: UNDEFINED]",
+    "Object type: not found. Contents: present.",
+    "This thing should not be here. It is here.",
+    "Classification failed. Retrying. Classification failed.",
+    "The record exists. The thing the record describes does not match.",
+    "Instance confirmed. Type unresolvable.",
+    "Known: it is here. Unknown: what 'it' refers to.",
+    "Registered as: [null]. Behaving as: [see attached incidents].",
+    "The log entry exists. The event it records does not match any other record.",
+    "It passed all checks. None of the checks apply to it.",
+    "Exists in the index as a placeholder for something not yet encountered.",
+    "It answered to a name it was not given.",
+    "The error occurred before the system existed.",
+    "Flagged for review in a system that no longer runs.",
+    "It is here in the way that something is here when no one can say otherwise."
+]);
+
+new Thing("null civilization",["ruins,0-3","archive entry,0-3","event fragment,0-3","anomaly,20%","unnamed thing,10%"],[
+    "A civilization with no surviving records of its name.",
+    "A civilization known only by what it built, none of which is understood.",
+    "A civilization that left extensive records in an unbroken cipher.",
+    "A civilization discovered through the absence it left.",
+    "A civilization that is documented only in the records of other civilizations.",
+    "A civilization that apparently ended voluntarily.",
+    "A civilization that ended and began again, twice, in the same location.",
+    "A civilization distinguished by what it did not do.",
+    "A civilization that achieved something significant and did not record it.",
+    "A civilization that recorded everything except why it ended.",
+    "A civilization found entirely below another civilization, aligned.",
+    "A civilization with no evidence of internal conflict and no explanation for this.",
+    "A civilization defined by a single monumental project whose purpose is unknown.",
+    "A civilization that apparently knew it would not survive.",
+    "A civilization that left no individual names, only collective designations."
+]);
+
+new Thing("vestige",["relic,0-2","unnamed thing,20%","thought fragment,0-2","anomaly,10%"],[
+    ["A vestige: "],
+    ["the last instance of something that was once common","the only surviving example of a thing made in enormous quantities","what remains when most of something is gone","an artifact that outlasted everything that made it meaningful","the part that was not destroyed with the rest","something functional after everything that required it is gone","the record of a thing with no copy of the thing itself","a translation of something whose original cannot be found","the habit of a behavior that is no longer necessary","a practice whose context has been entirely lost","an object kept past the point of understanding why","the remnant of an obligation that has expired","something that proves something happened, without indicating what","a word in common use with an unknown origin","a feeling for which the cause no longer exists"]
+]);
+
+
+// -----------------------------------------------
+// CROSS-CATEGORY CONNECTIVE TISSUE
+// (these exist to allow emergent unexpected jumps)
+// -----------------------------------------------
+
+new Thing("convergence",["anomaly,20%","impossible object,10%","thought fragment,2-4","broken concept,10%","portal,5%","unnamed thing,10%","universe,5%"],[
+    "A point where unrelated things arrive at the same time.",
+    "A place where things from different categories share a border.",
+    "An event that two unrelated sequences both required.",
+    "A meeting of things that should not have been in the same place.",
+    "A coincidence so structural it cannot be coincidence.",
+    "The point where several independent processes produce the same output.",
+    "A knot in causality.",
+    "The moment two metaphors become the same metaphor.",
+    "A location visited by things that had no reason to visit each other.",
+    "A single event with too many causes.",
+    "Two things that are not the same thing in any measurable way, behaving identically.",
+    "A story that appears independently in too many places.",
+    "The number that keeps appearing in unrelated calculations.",
+    "The name that keeps appearing across unrelated records.",
+    "Everything pointing at the same thing from different directions."
+]);
+
+new Thing("fragment",["thought fragment,0-2","event fragment,0-1","broken concept,10%","relic,10%","note,10%","bone,5%","page,1-3"],[
+    ["A fragment of "],
+    ["something much larger","something that was complete until recently","an argument","a structure","a record","a language","a relationship","a system","an agreement","a plan","a vision","a memory","a signal","a civilization","a name","a sentence that may have changed everything","a map","a document that mattered to exactly one person","something that no longer exists as a whole","a world"]
+]);
+
+new Thing("threshold",["door","anomaly,20%","portal,10%","thought fragment,0-1","convergence,5%"],[
+    "A threshold between what was and what is.",
+    "A threshold between two things that should not be adjacent.",
+    "A threshold that has been crossed too many times to be neutral.",
+    "A threshold that has never been crossed.",
+    "A threshold with records on one side and silence on the other.",
+    "A threshold that changes depending on the direction of crossing.",
+    "A threshold between a known category and an unknown one.",
+    "A threshold that is not a door but behaves like one.",
+    "A threshold that marks the edge of something no one defined.",
+    "A threshold with different rules on each side."
+]);
+
+new Thing("index",["archive entry,3-10","database,10%","codex,10%","book,0-3"],[
+    ["An index of "],
+    ["things that cannot be found","things that were found and returned","things found in the wrong place","things that should not exist","things that existed briefly","things that exist in only one copy","things that have been described but not confirmed","things that were lost before they were named","things that have no other record","things that are exactly what they appear to be, which is unusual"]
+]);
+
+
+// -----------------------------------------------
+// ADDITIONAL LOCATIONS FOR PLANET TYPES
+// -----------------------------------------------
+
+new Thing("waste planet",["ruins,1-3","anomaly,10%","organism,0-3","synthetic life,0-2","rock","ash"],["telluric planet"]);
+new Thing("archive planet",["archive,1-3","ruins,0-2","robot,0-3","codex,1-5","database,1-3"],"telluric planet");
+new Thing("living planet",["organism,1-5","synthetic life,0-2","ecosystem","anomaly,10%","space monster,0.5%"],"telluric planet");
+new Thing("ecosystem",["forest life,0-3","sea life,0-3","land life,0-3","organism,0-4","synthetic life,0-2"],"ecosystem");
+new Thing("robot",["electronics","mechanics","machine,0-2","nanobot,0-3"],[
+    ["a "],
+    ["decommissioned","functional","partially functional","restored","repurposed","autonomous","non-autonomous","ancient","newly assembled","self-replicating"],
+    [" robot"]
+]);
+
+// expand star system to include new planet types
+// (we add new standalone types; the existing star system already uses .planet composition references)
+new Thing("deep space object",["black hole,20%","nebula,30%","interstellar cloud,30%","space monster,5%","anomaly,10%","space animal,0-3"],[
+    ["a "],
+    ["magnetar","pulsar","white dwarf","brown dwarf","neutron star","quasar","protostar","globular cluster","stellar nursery","supernova remnant"],
+    [""]
+]);
+
+
+// -----------------------------------------------
+// EXTENDED CITY TYPES
+// -----------------------------------------------
+
+new Thing("mobile city",["future city,30%","sprowseship,0-3","future person,10-30","nanocollector,2-4","anomaly,5%"],[
+    ["A mobile city "],
+    ["that travels along a fixed route","that follows something across a continent","that has never stopped moving","that stopped moving a generation ago and its residents disagree about whether to resume","that moves to avoid seasonal conditions","that moves toward resources","that moves away from something","that was designed to move and has lost the ability","that moves on a schedule no one currently living set","that circles a fixed point at a fixed distance"]
+]);
+
+new Thing("buried city",["underground city,30%","ruins,20%","archive,10%","anomaly,10%","dungeon,20%"],[
+    ["A city buried under "],
+    ["the current city","a subsequent city","a landslide that preserved it perfectly","centuries of sediment","a deliberate covering","a natural event","the thing it was built to prevent","the expansion of a different city","something that was also buried","the weight of what it produced"]
+]);
+
+new Thing("artificial city",["future city,30%","visitor city,20%","robot,0-5","nanocollector,1-4","database,0-2","synthetic life,0-3"],[
+    ["An artificial city "],
+    ["built by something other than its current inhabitants","constructed to house a specific function","designed before the people who live in it existed","built for a purpose that has since changed","inhabited by people who were not its intended occupants","that works as designed despite being inhabited in an unintended way","that is maintained by systems no one living has modified","that was inhabited and then abandoned and then inhabited again","built as a test that became permanent","that was supposed to be temporary"]
+]);
+
+
+// ============================================================
+// END OF EXPANSION PACK
+// Ensure the line "CleanThings();" follows immediately below.
+// ============================================================
 
 //to add :
 //cows,fungi,more shops,temples,more buildings,paintings,internal organs,phones,lamps,abandoned plants/castles,spaceships oh god
